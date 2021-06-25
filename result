@@ -1,0 +1,60 @@
+Starting test 1
+Finished test 1
+Test 1:		PASSED
+Starting test 2
+Finished test 2
+Test 2:		PASSED
+Starting test 3
+Finished test 3
+Test 3:		PASSED
+Starting test 4
+Finished test 4
+Test 4:		PASSED
+Starting test 5
+Finished test 5
+Test 5:		PASSED
+Starting test 6
+Finished test 6
+Test 6:		PASSED
+Starting test 7
+Finished test 7
+Test 7:		PASSED
+Starting test 8
+Finished test 8
+Test 8:		PASSED
+Starting test 9
+Finished test 9
+Test 9:		PASSED
+Starting test 10
+Finished test 10
+Test 10:		PASSED
+
+Run pylint
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/astroid/astpeephole.py", line 17, in <module>
+    _TYPES = (_ast.Str, _ast.Bytes)
+AttributeError: module '_ast' has no attribute 'Str'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/usr/lib/python3/dist-packages/pylint/__main__.py", line 7, in <module>
+    pylint.run_pylint()
+  File "/usr/lib/python3/dist-packages/pylint/__init__.py", line 15, in run_pylint
+    from pylint.lint import Run
+  File "/usr/lib/python3/dist-packages/pylint/lint.py", line 64, in <module>
+    import astroid
+  File "/usr/lib/python3/dist-packages/astroid/__init__.py", line 67, in <module>
+    from astroid.builder import parse, extract_node
+  File "/usr/lib/python3/dist-packages/astroid/builder.py", line 26, in <module>
+    from astroid import rebuilder
+  File "/usr/lib/python3/dist-packages/astroid/rebuilder.py", line 17, in <module>
+    from astroid import astpeephole
+  File "/usr/lib/python3/dist-packages/astroid/astpeephole.py", line 19, in <module>
+    _TYPES = (_ast.Str, )
+AttributeError: module '_ast' has no attribute 'Str'

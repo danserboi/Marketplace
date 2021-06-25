@@ -1,0 +1,74 @@
+Nume: Șerboi Florea-Dan
+Grupă: 335CB
+
+Tema 1 ASC
+
+=> Organizare
+
+Ca și structură, nu am adăugat fișiere adiționale, am păstrat fișierele oferite deja în 
+schelet, pe care le-am completat.
+
+Cea mai mare parte a logicii programului se găsește în clasa Marketplace.
+Ca și metode de sincronizare am folosit Lock-uri(unul atunci când înregistrăm un producător 
+și trebuia să asignăm un nou id și o coadă de produse producătorului în mod atomic, altul 
+atunci când cream un nou coș și tot așa trebuia să asignăm un nou id și o coadă de produse) 
+și am profitat de faptul că structurile de date în Python precum dicționare, deque, liste etc. 
+sunt thread-safe.
+Am utilizat deque pentru a reține produsele unui producător, respectiv produsele dintr-un coș, 
+deoarece suportă operații thread-safe, eficiente din punct de vedere al memoriei, pentru 
+adăugare si ștergere la ambele capete, cu o complexitate temporală O(1). Deși și list oferă 
+suport similar pentru aceste operații, ele nu sunt optimizate și generează un cost de memorie 
+O(n) deoarece se schimbă reprezentarea interna la apelarea lor.
+
+În clasa Consumer(care moștenește Thread), am apelat constructorul subclasei cu kwargs și am 
+inițializat câmpurile date ca parametru, provenite din fișierul de input. În funcția run, cea 
+care conține logica thread-ului, am parcurs fiecare coș al consumatorului și am plasat comanda 
+aferentă fiecăruia ținând cont de acțiunile de adăugare și scoatere din coș a produselor, 
+și, eventual, de timpul de reîncercare.
+
+Asemănător, pentru Producer, în constructor, am inițializat câmpurile și am apelat 
+constructorul subclasei. De menționat ar fi că am inițializat id-ul producer-ului folosindu-mă 
+de funcția register_producer din marketplace și că acest thread, spre deosebire de Consumer, 
+este de tip daemon. În funcția run, în mod continuu, am produs secvențial produsele specificate 
+în fișierul de intrare, respectând timpii de așteptare precizați, după caz, de 
+producere/"publicare" sau de reîncercare/"republicare".
+
+Consider că tema a fost utilă deoarece am aprofundat limbajul Python care a câștigat foarte 
+multă popularitate recent și care este omniprezent în industrie. Faptul că am lucrat cu o 
+problemă clasică(Multi Producer, Multi Consumer) a facilitat înțelegerea cerințelor.
+
+Eu cred că implementarea mea este una eficientă, nu știu ce aș fi putut îmbunătăți.
+
+=> Implementare
+
+Întreg enunțul temei a fost implementat.
+
+Nu au fost implementate funcționalități extra.
+
+Ca și dificultăți întâmpinate:
+- ar fi fost bine să fie precizat explicit în enunț că toată partea de citire a input-ului și 
+de inițializare este facută automat de checker și că noi nu trebuie să ne mai preocupăm cu 
+asta, oferindu-se și o prezentare pe scurt a codului care realizează acest obiectiv. A trebuit 
+să mă uit prin fișierele de testare oferite ca să îmi dau seama cum funcționează lucrurile.
+- greșeam când nu puneam producătorii să produca produsele asignate lor în mod 
+repetat/continuu(într-o bucla infinită).
+- nu știam ce este un thread daemon și cum se folosește în Python. Lucrul care mi-a dat de 
+gândit a fost faptul că producătorii primeau în kwargs un argument daemon, setat mereu pe True. 
+Astfel, am aflat cum trebuie inițializată clasa Thread pe care un Producer o moștenește(poate 
+primi ca parametru chiar kwargs). Un thread daemon este un thread care rulează fără a bloca 
+terminarea programului main, și, prin urmare, programul main se termină atunci când doar 
+thread-uri de tip daemon există.
+- de asemenea, nu mi-a fost clar ce parametri primesc producătorii și consumatorii la 
+inițializare. Ulterior, am aflat că id-ul este conținut în dictionarul kwargs pentru ambele 
+categorii și că producatorii primesc întotdeauna un argument daemon setat pe True pentru că 
+atunci când consumatorii îsi termină treaba, producătorii să se oprească și ei, neblocând 
+terminarea programului principal.
+
+=> Resurse utlizate
+
+- https://docs.python.org/3/library/threading.html
+- https://docs.python.org/3/library/collections.html#collections.deque
+- https://www.journaldev.com/16152/python-daemon-thread
+- https://ocw.cs.pub.ro/courses/asc/laboratoare/01
+- https://ocw.cs.pub.ro/courses/asc/laboratoare/02
+- https://ocw.cs.pub.ro/courses/asc/laboratoare/03
